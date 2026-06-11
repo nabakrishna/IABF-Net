@@ -1,0 +1,5 @@
+1. Introduction & Theoretical Problem Formulation
+Modern autonomous vehicle perception architectures must maintain high structural precision and spatial tracking consistency across 
+diverse environmental conditions. While multi-modal systems combining passive vision (cameras) and active ranging (LiDAR) offer 
+theoretical structural redundancy, standard networks degrade significantly when subjected to out-of-distribution (OOD) atmospheric 
+and lighting anomalies.
