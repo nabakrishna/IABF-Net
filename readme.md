@@ -72,3 +72,15 @@ This dynamic formulation establishes an environment-aware fail-safe mechanism:
 * **Pristine Daylight:** $\alpha \rightarrow 1$, leveraging dense visual textures for precise classification and boundary resolution.
 * **Adverse Conditions (Fog, Glare, Low-Lux Night):** $\alpha \rightarrow 0$, gracefully decaying reliance on the corrupted camera features and defaulting tracking priorities safely to active physical ranging modalities.
 ---
+## 4. THE FOUR CORE PROJECT PILLARS
+The deployment of IABF-Net relies on four core architectural pillars to ensure stable, multi-modal vehicle
+tracking across variable environmental conditions.
+### 4.1 Pillar 1: Multi-Modal Bird's-Eye View (BEV) Fusion Engine
+Fusing independent sensors requires mapping different spatial coordinate spaces into a shared, unified layer.
+Perspective multi-view camera matrices are processed through an integrated Lift-Splat-Shoot transformation
+layer that generates a discrete probability distribution over depth for each image region. This maps 2D
+coordinates directly into an orthographic ground plane.
+Concurrently, raw 3D LiDAR point sweeps are voxelized into uniform spatial grids and processed using 3D
+sparse convolutional layers to generate an aligned structural BEV map. Combining these layers through our
+learnable alpha-weighted fusion rule ensures the system can perform multi-modal spatial reasoning without
+relying on unweighted, static concatenation steps.
