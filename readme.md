@@ -73,9 +73,12 @@ This dynamic formulation establishes an environment-aware fail-safe mechanism:
 * **Adverse Conditions (Fog, Glare, Low-Lux Night):** $\alpha \rightarrow 0$, gracefully decaying reliance on the corrupted camera features and defaulting tracking priorities safely to active physical ranging modalities.
 ---
 ## 4. THE FOUR CORE PROJECT PILLARS
+
 The deployment of IABF-Net relies on four core architectural pillars to ensure stable, multi-modal vehicle
 tracking across variable environmental conditions.
+
 ### 4.1 Pillar 1: Multi-Modal Bird's-Eye View (BEV) Fusion Engine
+
 Fusing independent sensors requires mapping different spatial coordinate spaces into a shared, unified layer.
 Perspective multi-view camera matrices are processed through an integrated Lift-Splat-Shoot transformation
 layer that generates a discrete probability distribution over depth for each image region. This maps 2D
@@ -84,3 +87,20 @@ Concurrently, raw 3D LiDAR point sweeps are voxelized into uniform spatial grids
 sparse convolutional layers to generate an aligned structural BEV map. Combining these layers through our
 learnable alpha-weighted fusion rule ensures the system can perform multi-modal spatial reasoning without
 relying on unweighted, static concatenation steps.
+
+### 4.2 Pillar 2: Temporal Momentum Hysteresis Controller
+
+In highly dynamic driving environments, rapid variations in local feature profiles can cause high-frequency
+oscillations in the gating layer's output. This phenomenon, known as gating chatter, introduces temporal
+instability to the feature space, leading to bounding box jitter and tracking dropouts.
+To decouple the system from sudden instantaneous sensor noise, IABF-Net integrates a temporal momentum
+hysteresis controller directly into the gating pipeline. The raw confidence scalar computed at the current time
+step, raw_alpha, is filtered based on its historical state trajectory. The controller uses a dead-zone activation
+threshold and a temporal momentum coefficient to compute the smoothed operational parameter.
+
+### 4.3 Pillar 3: Heteroscedastic Uncertainty Estimation
+
+To prevent degraded sensor streams from corrupting the network's optimization landscape during training, the
+3D regression heads use a split architecture. This design outputs both the target bounding coordinates and a
+localized log-variance mapping matrix. This heteroscedastic uncertainty formulation allows the model to
+adaptively attenuate losses on a per-pixel basis:
