@@ -104,3 +104,9 @@ To prevent degraded sensor streams from corrupting the network's optimization la
 3D regression heads use a split architecture. This design outputs both the target bounding coordinates and a
 localized log-variance mapping matrix. This heteroscedastic uncertainty formulation allows the model to
 adaptively attenuate losses on a per-pixel basis:
+
+
+
+When a sensor modality encounters harsh environmental noise, the network minimizes its loss penalty by
+scaling up the corresponding variance term. This acts as an automated, learnable attenuation mechanism,
+shielding the shared network parameters from noisy backpropagation updates during bad weather
