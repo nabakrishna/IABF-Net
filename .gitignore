@@ -11,5 +11,8 @@ real_grph.py
 graph.py
 readme.md
 real_grph.py
-result
 .vscode
+result/hysteresis_sensitivity_curve.png
+result/detection_performance_and_drift.png
+result/hardware_efficiency_profile.png
+result/tables.tex
